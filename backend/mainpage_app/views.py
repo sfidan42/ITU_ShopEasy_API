@@ -1,25 +1,57 @@
-import json
-from django.core import serializers
-from django.shortcuts import render
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from .models import ItemUnits, ItemUnitsSerializer
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListCreateAPIView
+from .models import (
+    Users, ItemUnits, Items, Stores, StoreItems,
+    Transactions, ProductsExchanged, TotalBalance
+)
+from .serializers import (
+    UsersSerializer, ItemUnitsSerializer, ItemsSerializer,
+    StoresSerializer, StoreItemsSerializer, TransactionsSerializer,
+    ProductsExchangedSerializer, TotalBalanceSerializer
+)
 
-class ItemUnitsListView(ListAPIView):
+# --- USERS ---
+class UsersListCreateView(ListCreateAPIView):
+    queryset = Users.objects.all()
+    serializer_class = UsersSerializer
+
+
+# --- ITEM UNITS ---
+class ItemUnitsListCreateView(ListCreateAPIView):
     queryset = ItemUnits.objects.all()
     serializer_class = ItemUnitsSerializer
 
 
-class ItemUnitsCreateView(CreateAPIView):
-    queryset = ItemUnits.objects.all()  # Not strictly needed, but useful for validation
-    serializer_class = ItemUnitsSerializer  # The serializer that handles creation
+# --- ITEMS ---
+class ItemsListCreateView(ListCreateAPIView):
+    queryset = Items.objects.all()
+    serializer_class = ItemsSerializer
 
 
-# Create your views here.
-@api_view(['GET','POST'])
-def getItemUnits(request):
-	data = serializers.serialize("json", ItemUnits.objects.all())
-	print(data)
-	return Response(data)
+# --- STORES ---
+class StoresListCreateView(ListCreateAPIView):
+    queryset = Stores.objects.all()
+    serializer_class = StoresSerializer
 
+
+# --- STORE ITEMS ---
+class StoreItemsListCreateView(ListCreateAPIView):
+    queryset = StoreItems.objects.all()
+    serializer_class = StoreItemsSerializer
+
+
+# --- TRANSACTIONS ---
+class TransactionsListCreateView(ListCreateAPIView):
+    queryset = Transactions.objects.all()
+    serializer_class = TransactionsSerializer
+
+
+# --- PRODUCTS EXCHANGED ---
+class ProductsExchangedListCreateView(ListCreateAPIView):
+    queryset = ProductsExchanged.objects.all()
+    serializer_class = ProductsExchangedSerializer
+
+
+# --- TOTAL BALANCE ---
+class TotalBalanceListCreateView(ListCreateAPIView):
+    queryset = TotalBalance.objects.all()
+    serializer_class = TotalBalanceSerializer
